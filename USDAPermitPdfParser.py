@@ -83,7 +83,7 @@ def read_pdf(filename):
 			releaseSection = releaseSection.replace('RELEASE:', '')
 			county_start_index = releaseSection.find(':')
 			county_stop_index = releaseSection.find(')')
-			counties = releaseSection[county_start_index+2:county_stop_index].strip()		
+			counties = releaseSection[county_start_index+2:county_stop_index].strip().replace(',', ';')		
 		if 'Under the conditions specified, this permit authorizes the following:' in line:
 			taxonomy_start_index = pdfline.index(line)
 			continue
@@ -233,8 +233,8 @@ def read_pdf(filename):
 						authCompanyList.append(auth[of_index+2:comma_index].replace('[', '').replace(']', ''))
 			
 
-	authorizedUsers = ', '.join(authUsersList).strip()
-	authorizedCompanies = ', '.join(authCompanyList).strip()
+	authorizedUsers = '; '.join(authUsersList).strip().replace(',', ';')
+	authorizedCompanies = '; '.join(authCompanyList).strip().replace(',', ';')
 	myPermitConditions = myPermitConditions.replace("Animal and Plant Health Inspection Service","").replace("Plant Protection & Quarantine", "").strip()
 
 	#only want authorization info for Field permits
